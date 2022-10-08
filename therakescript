@@ -1,0 +1,219 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+
+local errors, errormsg = pcall(function()
+	
+	local ArtificialHB = Instance.new("BindableEvent", script)
+	ArtificialHB.Name = "RenderStepped"
+	
+	script:WaitForChild("RenderStepped")
+	
+	local tf = 0
+	local allowframeloss = false
+	local tossremainder = false
+	local lastframe = tick()
+	local frame = 1/60
+	ArtificialHB:Fire()
+	
+	game:GetService("RunService").RenderStepped:connect(function(s, p)
+		tf = tf + s
+		if tf >= frame then
+			if allowframeloss then
+				script.RenderStepped:Fire()
+				lastframe = tick()
+			else
+				for i = 1, math.floor(tf / frame) do
+					ArtificialHB:Fire()
+				end
+				lastframe = tick()
+			end
+			if tossremainder then
+				tf = 0
+			else
+				tf = tf - frame * math.floor(tf / frame)
+			end
+		end
+	end)
+	
+	function swait(num)
+		if num == 0 or num == nil then
+			ArtificialHB.Event:wait()
+		else
+			for i = 0, num do
+				ArtificialHB.Event:wait()
+			end
+		end
+	end
+	
+	
+	local r = 255
+	local g = 0
+	local b = 0
+	coroutine.resume(coroutine.create(function()
+		while wait() do
+			for i = 0, 254/5 do
+				swait()
+				g = g + 5
+			end
+			for i = 0, 254/5 do
+				swait()
+				r = r - 5
+			end
+			for i = 0, 254/5 do
+				swait()
+				b = b + 5
+			end
+			for i = 0, 254/5 do
+				swait()
+				g = g - 5
+			end
+			for i = 0, 254/5 do
+				swait()
+				r = r + 5
+			end
+			for i = 0, 254/5 do
+				swait()
+				b = b - 5
+			end
+		end
+	end))
+	
+	local RakeGui = Instance.new("ScreenGui")
+	local Timer = Instance.new("TextLabel")
+	local Song = Instance.new("TextBox")
+	local Close = Instance.new("TextButton")
+	local Power = Instance.new("TextLabel")
+	
+	--Properties:
+	
+	if game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("RakeGui") then
+		game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("RakeGui"):Destroy()
+	end
+	
+	if game:GetService("StarterGui"):FindFirstChild("RakeGui") then
+		game:GetService("StarterGui"):FindFirstChild("RakeGui"):Destroy()
+	end
+	
+	RakeGui.Name = "RakeGui"
+	RakeGui.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+	
+	Song.Name = "Song"
+	Song.Parent = RakeGui
+	Song.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Song.BorderColor3 = Color3.fromRGB(255, 255, 255)
+	Song.BorderSizePixel = 2
+	Song.Position = UDim2.new(0.733950615, 0, 0, 0)
+	Song.Size = UDim2.new(0.123456791, 0, 0.0601684712, 0)
+	Song.Font = Enum.Font.SourceSans
+	Song.Text = "Music Here"
+	Song.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Song.TextSize = 14.000
+	
+	Power.Name = "Power"
+	Power.Parent = Song
+	Power.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Power.Position = UDim2.new(-0.481506467, 0, -0.0212033689, 0)
+	Power.Size = UDim2.new(0.481139004, 0, 1.01999998, 0)
+	Power.Font = Enum.Font.SourceSans
+	Power.Text = "Power Level: "
+	Power.TextColor3 = Color3.fromRGB(232, 255, 83)
+	Power.TextSize = 14.000
+	
+	Close.Name = "Close"
+	Close.Parent = Song
+	Close.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Close.BackgroundTransparency = 0.250
+	Close.Position = UDim2.new(0.355802625, 0, 0.980168462, 0)
+	Close.Size = UDim2.new(0.300000012, 0, 0.540000021, 0)
+	Close.Font = Enum.Font.Oswald
+	Close.Text = "^"
+	Close.TextColor3 = Color3.fromRGB(0, 0, 0)
+	Close.TextSize = 49.000
+	Close.TextYAlignment = Enum.TextYAlignment.Top
+	
+	Timer.Name = "Timer"
+	Timer.Parent = RakeGui
+	Timer.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	Timer.Position = UDim2.new(0.734413981, 0, 0.939831555, 0)
+	Timer.Size = UDim2.new(0.0561097264, 0, 0.0601684712, 0)
+	Timer.Font = Enum.Font.SourceSans
+	Timer.Text = "0"
+	Timer.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Timer.TextScaled = true
+	Timer.TextSize = 14.000
+	Timer.TextWrapped = true
+	
+	local Player = game:GetService("Players").LocalPlayer
+	local char = Player.Character
+	local hum = char:FindFirstChildOfClass("Humanoid")
+	local hasplayed = false
+	local commitdie = false
+	Close.MouseButton1Down:Connect(function()
+		if Close.Text == "^" then
+			Close.Text = "."
+			game:GetService("TweenService"):Create(Song,TweenInfo.new(1),{Position = UDim2.new(0.734, 0,-0.1, 0)}):Play()
+		elseif Close.Text == "." then
+			Close.Text = "^"
+			game:GetService("TweenService"):Create(Song,TweenInfo.new(1),{Position = UDim2.new(0.733950615, 0, 0, 0)}):Play()
+		end
+	end)
+	local Mouse = Player:GetMouse()
+	
+	Mouse.KeyDown:Connect(function(k)
+		if commitdie == false then
+			if k == "q" and sprint == false then
+				setwalkspeed = 30
+				hum.WalkSpeed = setwalkspeed
+				sprint = true
+			elseif k == "q" and sprint == true then
+				setwalkspeed = 11
+				hum.WalkSpeed = setwalkspeed
+				sprint = false
+			end
+			if k == "p" then
+				commitdie = true
+				static:Disconnect()
+				chaseS:Disconnect()
+				wconn:Disconnect()
+				cammax:Disconnect()
+				blood:Disconnect()
+				theme:Destroy()
+			end
+			if k == "b" then
+				if RakeGui.Enabled == true then
+					RakeGui.Enabled = false
+				elseif RakeGui.Enabled == false then
+					RakeGui.Enabled = true
+				end
+			end
+		end
+	end
+	spawn(function()
+		while wait() do
+			if RakeGui.Parent == nil then
+				commitdie = true
+			end
+			if commitdie == true then
+				RakeGui:Destroy()
+				break
+			end
+			theme.SoundId = Song.Text
+			theme.Playing = true
+			local errors,msg = pcall(function()
+				end
+				local timer = game:GetService("ReplicatedStorage")["Timer"].Value
+				local pLevel = game:GetService("ReplicatedStorage")["PowerValues"]["PowerLevel"].Value
+				Power.Text = "Power Level: " .. tostring(pLevel)
+				Timer.Text = tostring(timer)
+				end
+			end)
+			if errors ~= true then
+				print(tostring(errors) .. " " .. msg)
+			end
+		end
+	end)
+end
+print(errormsg)
