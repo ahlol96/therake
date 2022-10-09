@@ -164,24 +164,6 @@ local errors, errormsg = pcall(function()
 	
 	Mouse.KeyDown:Connect(function(k)
 		if commitdie == false then
-			if k == "q" and sprint == false then
-				setwalkspeed = 30
-				hum.WalkSpeed = setwalkspeed
-				sprint = true
-			elseif k == "q" and sprint == true then
-				setwalkspeed = 11
-				hum.WalkSpeed = setwalkspeed
-				sprint = false
-			end
-			if k == "p" then
-				commitdie = true
-				static:Disconnect()
-				chaseS:Disconnect()
-				wconn:Disconnect()
-				cammax:Disconnect()
-				blood:Disconnect()
-				theme:Destroy()
-			end
 			if k == "b" then
 				if RakeGui.Enabled == true then
 					RakeGui.Enabled = false
@@ -204,10 +186,10 @@ local errors, errormsg = pcall(function()
 			theme.Playing = true
 			local errors,msg = pcall(function()
 				end
-				local timer = game:GetService("ReplicatedStorage")["Timer"].Value
+				local timerti = game:GetService("ReplicatedStorage")["Timer"].Value
 				local pLevel = game:GetService("ReplicatedStorage")["PowerValues"]["PowerLevel"].Value
 				Power.Text = "Power Level: " .. tostring(pLevel)
-				Timer.Text = tostring(timer)
+				Timer.Text = tostring(timerti)
 				end
 			end)
 			if errors ~= true then
@@ -216,4 +198,3 @@ local errors, errormsg = pcall(function()
 		end
 	end)
 end
-print(errormsg)
