@@ -1259,8 +1259,10 @@ if notdestroyed == true then
 	Left:Destroy()
 	Right:Destroy()
 	wait(1)
-	local notdestroyed = false
 end
+wait(1)
+local notdestroyed = false
+wait(1)
 print(errormsg)
 wait(1)
 print("Loaded!")
