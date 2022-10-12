@@ -1257,11 +1257,12 @@ local errors, errormsg = pcall(function()
 		Weapon:Destroy()
 		Left:Destroy()
 		Right:Destroy()
+		incoming:Destroy()
+		theme:Destroy()
 		wait(1)
 		local notdestroyed = false
 	end
 end)
-wait(1)
 print(errormsg)
 wait(1)
 print("Loaded!")
