@@ -66,7 +66,7 @@ UICorner_2.Parent = PowerT
 UICorner_3.CornerRadius = UDim.new(0, 9)
 UICorner_3.Parent = TimePower
 
--- Time&Power Values
+-- Time&Power Values&Text
 
 while true do
 	local Time = game:GetService("ReplicatedStorage")["Timer"].Value
@@ -75,4 +75,3 @@ while true do
 	TimeT.Text = tostring(Time)
 	wait()
 end
--- Time&Power Text
