@@ -66,4 +66,5 @@ local Power = game:GetService("ReplicatedStorage")["PowerValues"]["PowerLevel"].
 while true do
 	PowerT.Text = tostring(Power)
 	TimeT.Text = tostring(Time)
+	wait()
 end
