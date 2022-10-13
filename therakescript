@@ -8,6 +8,16 @@ local PowerT = Instance.new("TextLabel")
 local UICorner_2 = Instance.new("UICorner")
 local UICorner_3 = Instance.new("UICorner")
 
+-- If already executen delete gui and run new gui
+
+if game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("ah_lol96_TR:R") then
+	game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):FindFirstChild("ah_lol96_TR:R"):Destroy()
+end
+	
+if game:GetService("StarterGui"):FindFirstChild("ah_lol96_TR:R") then
+	game:GetService("StarterGui"):FindFirstChild("ah_lol96_TR:R"):Destroy()
+end
+
 -- GUI
 
 ah_lol96_TRR.Name = "ah_lol96_TR:R"
@@ -58,13 +68,11 @@ UICorner_3.Parent = TimePower
 
 -- Time&Power Values
 
-local Time = game:GetService("ReplicatedStorage")["Timer"].Value
-local Power = game:GetService("ReplicatedStorage")["PowerValues"]["PowerLevel"].Value
-
--- Time&Power Text
-
 while true do
+	local Time = game:GetService("ReplicatedStorage")["Timer"].Value
+	local Power = game:GetService("ReplicatedStorage")["PowerValues"]["PowerLevel"].Value
 	PowerT.Text = tostring(Power)
 	TimeT.Text = tostring(Time)
 	wait()
 end
+-- Time&Power Text
